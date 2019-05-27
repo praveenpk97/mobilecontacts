@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 <style>
 .form-sec{width:400px; background:#ccc; padding:15px;width: 400px;
@@ -30,41 +33,81 @@
                   </ul>
                 </div>
               </div>
-<div class="container" style="text-align: center;margin:200px">
-
+<div id = "app" class="container" style="text-align: center;margin:200px">
 <div class="form-sec" style="margin-left: 278px" style="margin-top: 222px">
   <h4>New Contacts</h4>
   
- <form name="qryform" id="qryform" method="post" action="mail.php" onsubmit="return(validate());" novalidate="novalidate">
+ <section>
     <div class="form-group">
-      <label>Name:</label>
-      <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+      <label for="name"> Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name" v-model="name">
     </div>
     <div class="form-group">
-      <label>Email:</label>
-      <input type="email" class="form-control" id="name" placeholder="Enter Email" name="email">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="name" placeholder="Enter Email" name="email" v-model="email">
     </div>
     
     <div class="form-group">
-      <label>Phone No.:</label>
-      <input type="text" class="form-control" id="phone" placeholder="Enter Phone no." name="phone">
+      <label for="phnum">Phone No.:</label>
+      <input type="text" class="form-control" id="phone" placeholder="Enter Phone no." name="phone" v-model="phnum">
     </div>
 	<div class="form-group">
-      <label>work address:</label>
-      <input type="text" class="form-control" id="name" placeholder="Enter your work address" name="subject">
+      <label for="address">work address:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter your work address" name="subject" v-model="address">
     </div>
 	 
 	<div class="form-group">
-      <label>Group name</label>
-      <textarea name="issues" class="form-control" id="iq" placeholder="Enter your group name"></textarea>
+      <label for="gname">Group name</label>
+      <textarea name="issues" class="form-control" id="iq" placeholder="Enter your group name" v-model="gname"></textarea>
     </div>
-	
-    
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+    <button class="btn btn-default" @click="saveContact()" >Submit</button>
+  </section>
   </div>
 
 
+
+
+<table class="table">
+  <tr>
+      <th>Name</th>
+      <th>email</th>
+      <th>Phone No</th>
+      <th> Work address</th>
+      <th>Group name</th>
+  </tr>
+  <tr v-for="(contact, index) in contacts">
+      <td>{{contact.name}}</td>
+      <td>{{contact.email}}</td>
+      <td>{{contact.phnum}}</td>
+      <td>{{contact.address}}</td>
+      <td>{{contact.gname}}</td>
+
+  </tr>
+</table>
+
+
 </div>
+
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!',
+      contacts: [],
+      name: '',
+      email: '',
+      phnum: '',
+      address:'',
+      gname:'',
+    },
+    methods: {
+      saveContact() {
+        const contactInfo = {name: this.name, email: this.email, address: this.address, gname: this.gname, phnum: this.phnum}
+        this.contacts.push(contactInfo);
+        this.name = this.email = this.phnum = this.address = this.gname ='';
+      }
+    },
+  })
+</script>
 </body>
 </html>
