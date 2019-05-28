@@ -40,27 +40,28 @@
  <section>
     <div class="form-group">
       <label for="name"> Name:</label>
-      <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name" v-model="contactInfo.name">
+      <input type="text" class="form-control" id="name" placeholder="Enter Name"  v-model="name">
     </div>
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="name" placeholder="Enter Email" name="email" v-model="contactInfo.email">
+      <input type="email" class="form-control" id="name" placeholder="Enter Email"  v-model="email">
     </div>
     
     <div class="form-group">
       <label for="phnum">Phone No.:</label>
-      <input type="text" class="form-control" id="phone" placeholder="Enter Phone no." name="phone" v-model="contactInfo.phnum">
+      <input type="text" class="form-control" id="phone" placeholder="Enter Phone no."  v-model="phnum">
     </div>
 	<div class="form-group">
       <label for="address">work address:</label>
-      <input type="text" class="form-control" id="name" placeholder="Enter your work address" name="subject" v-model="contactInfo.address">
+      <input type="text" class="form-control" id="name" placeholder="Enter your work address"  v-model="address">
     </div>
 	 
 	<div class="form-group">
       <label for="gname">Group name</label>
-      <textarea name="issues" class="form-control" id="iq" placeholder="Enter your group name" v-model="contactInfo.gname"></textarea>
+      <textarea name="issues" class="form-control" id="iq" placeholder="Enter your group name" v-model="gname"></textarea>
     </div>
-    <button class="btn btn-default" @click="saveContact()" >Submit</button>
+    <button class="btn btn-default" @click="saveContact()">Submit</button>
+    <button class="btn btn-default" @click="updateContact()">Update</button>
   </section>
   </div>
 
@@ -76,26 +77,14 @@
       <th>Group name</th> 
   </tr>
   <tr v-for="(contact, index) in contacts">
-      <td>{{contact.name}}
-        <!-- <input type="text" v-model="contact.name" v-show="contact.edit"> -->
-      </td>
-      <td>{{contact.email}}
-        <!-- <input type="text" v-model="contact.emaile" v-show="contact.edit"> -->
-      </td>
-      <td>{{contact.phnum}}
-        <!-- <input type="text" v-model="contact.phnum" v-show="contact.edit"> -->
-      </td>
-      <td>{{contact.address}}
-        <!-- <input type="text" v-model="contact.address" v-show="contact.edit"> -->
-      </td>
-      <td>{{contact.gname}}
-        <!-- <input type="text" v-model="pcontact.gname" v-show="contact.edit"> -->
-      </td>
+      <td>{{contact.name}}</td>
+      <td>{{contact.email}} </td>
+      <td>{{contact.phnum}}</td>
+      <td>{{contact.address}} </td>
+     <td>{{contact.gname}}</td>
       <td>
         <button type="button" class="btn btn-danger" @click="deleteContact(index)"><b>DELETE</b></button>
         <button type="button" class="btn btn-info" @click="editContact(index)" ><b>EDIT</b></button>
-              <!-- <button v-show="!contact.edit" v-on:click="editContact(contact)">edit</button>
-              <button v-show="contact.edit" v-on:click="cancelContact(contact)">cancel</button> -->
       </td>
   </tr>
 </table>
@@ -105,35 +94,48 @@
     el: '#app',
     data: {
       contacts: [],
-      contactInfo: {}
+      name: '',
+      email: '',
+      phnum: '',
+      address: '',
+      gname: '',
     },
     methods: {
       saveContact() {
-        console.log(JSON.stringify(this.contactInfo));
-        this.contacts.push(this.contactInfo);
-        this.contactInfo = {};
+        const contactInfo = {name: this.name,
+          email: this.email,
+          phnum: this.phnum,
+          address: this.address,
+          gname: this.gname}
+        this.contacts.push(contactInfo);
+        this.name = this.email = this.phnum = this.address =this.gname ='';
       },
       deleteContact(index) {
         this.contacts.splice(index,1);
       }, 
-      editContact(index) {
-        this.contacts.update(index,1);
-      },
-      
-      
-          // editContact: function(contact){
-          //      this._originalPerson = Object.assign({}, contact);
-          //      contact.edit = true;
-          // },
-
-          // cancelContact: function(contact){
-          //      Object.assign(person, this._originalContact);
-          //      contact.edit = false;
-          // }
-    },
+      editContact(index)
+       {      
+        this.name = this.contacts[index].name;
+        this.email = this.contacts[index].email;
+        this.phnum = this.contacts[index].phnum;
+        this.address = this.contacts[index].address;
+        this.gname = this.contacts[index].gname;
+       },
+      //  updateContact(index)
+      //  {      
+      //   saveContact() {
+      //   const contactInfo = {name: this.name,
+      //     email: this.email,
+      //     phnum: this.phnum,
+      //     address: this.address,
+      //     gname: this.gname}
+      //   this.contacts.push(contactInfo);
+      //   this.name = this.email = this.phnum = this.address =this.gname ='';
+      //  },
+  
+    }
   })
-
-
 </script>
 </body>
 </html>
+ 
